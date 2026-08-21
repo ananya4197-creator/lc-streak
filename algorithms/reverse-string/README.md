@@ -2,7 +2,7 @@
 
 **Difficulty:** Easy
 
-**Language:** C++
+**Language:** Python3
 
 ## Problem
 
