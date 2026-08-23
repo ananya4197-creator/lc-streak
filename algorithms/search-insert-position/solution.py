@@ -1,10 +1,16 @@
 class Solution:
-    def containsDuplicate(self, nums):
-        return len(nums) != len(set(nums))
-        #for i in range(len(nums)):
-            #for j in range(i+1 , len(nums)):
-                #if nums[i] == nums[j]:
-                    #return True
-        #return False
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        left, right = 0, len(nums) - 1
 
+        while left <= right:
+            mid = (left + right) // 2
+
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] < target:
+                left = mid + 1
+            else:
+                right = mid - 1
+
+        return left
         
