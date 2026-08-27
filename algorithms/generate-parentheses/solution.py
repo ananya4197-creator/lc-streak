@@ -1,10 +1,17 @@
 class Solution:
-    def containsDuplicate(self, nums):
-        return len(nums) != len(set(nums))
-        #for i in range(len(nums)):
-            #for j in range(i+1 , len(nums)):
-                #if nums[i] == nums[j]:
-                    #return True
-        #return False
+    def generateParenthesis(self, n: int) -> List[str]:
+        res = []
 
-        
+        def backtracking(s,open,close):
+            if len(s) == 2*n:
+                res.append(s)
+                return
+
+            if open <n:
+                backtracking(s + "(", open +1,close)
+
+            if close <open:
+                backtracking(s + ")", open,close +1)
+
+        backtracking("", 0,0)
+        return res
