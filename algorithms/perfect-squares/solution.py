@@ -1,20 +1,12 @@
 class Solution:
-    def reverseVowels(self, s: str) -> str:
-        vowels = set("aeiouAEIOU")
-        s = list(s)
+    def numSquares(self, n: int) -> int:
+        dp = [0] + [999999] * n
 
-        left, right = 0, len(s) - 1
+        for i in range(1, n + 1):
+            for j in range(1, i + 1):
+                if j * j > i:
+                    break
 
-        while left < right:
-            while left < right and s[left] not in vowels:
-                left += 1
+                dp[i] = min(dp[i], dp[i - j * j] + 1)
 
-            while left < right and s[right] not in vowels:
-                right -= 1
-
-            s[left], s[right] = s[right], s[left]
-
-            left += 1
-            right -= 1
-
-        return "".join(s)
+        return dp[n]
