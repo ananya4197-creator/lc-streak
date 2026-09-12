@@ -1,38 +1,19 @@
 class Solution:
-    def solve(self, board):
-        if not board:
-            return
+    def getHint(self, secret: str, guess: str) -> str:
+        bulls = 0
+        cows = 0
 
-        rows = len(board)
-        cols = len(board[0])
+        secret_count = [0] * 10
+        guess_count = [0] * 10
 
-        def dfs(r, c):
-            if r < 0 or r >= rows or c < 0 or c >= cols:
-                return
+        for i in range(len(secret)):
+            if secret[i] == guess[i]:
+                bulls += 1
+            else:
+                secret_count[int(secret[i])] += 1
+                guess_count[int(guess[i])] += 1
 
-            if board[r][c] != 'O':
-                return
+        for i in range(10):
+            cows += min(secret_count[i], guess_count[i])
 
-            board[r][c] = 'T'
-
-            dfs(r + 1, c)
-            dfs(r - 1, c)
-            dfs(r, c + 1)
-            dfs(r, c - 1)
-
-        # Boundary O ko safe mark karo
-        for r in range(rows):
-            dfs(r, 0)
-            dfs(r, cols - 1)
-
-        for c in range(cols):
-            dfs(0, c)
-            dfs(rows - 1, c)
-
-        # O -> X, T -> O
-        for r in range(rows):
-            for c in range(cols):
-                if board[r][c] == 'O':
-                    board[r][c] = 'X'
-                elif board[r][c] == 'T':
-                    board[r][c] = 'O'
+        return str(bulls) + "A" + str(cows) + "B"
