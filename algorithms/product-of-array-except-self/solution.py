@@ -1,19 +1,18 @@
 class Solution:
-    def getHint(self, secret: str, guess: str) -> str:
-        bulls = 0
-        cows = 0
+    def productExceptSelf(self, nums):
+        n = len(nums)
+        answer = [1] * n
 
-        secret_count = [0] * 10
-        guess_count = [0] * 10
+        # Left product
+        prefix = 1
+        for i in range(n):
+            answer[i] = prefix
+            prefix *= nums[i]
 
-        for i in range(len(secret)):
-            if secret[i] == guess[i]:
-                bulls += 1
-            else:
-                secret_count[int(secret[i])] += 1
-                guess_count[int(guess[i])] += 1
+        # Right product
+        suffix = 1
+        for i in range(n - 1, -1, -1):
+            answer[i] *= suffix
+            suffix *= nums[i]
 
-        for i in range(10):
-            cows += min(secret_count[i], guess_count[i])
-
-        return str(bulls) + "A" + str(cows) + "B"
+        return answer
