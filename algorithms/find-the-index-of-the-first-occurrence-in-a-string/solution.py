@@ -1,18 +1,10 @@
 class Solution:
-    def productExceptSelf(self, nums):
-        n = len(nums)
-        answer = [1] * n
-
-        # Left product
-        prefix = 1
-        for i in range(n):
-            answer[i] = prefix
-            prefix *= nums[i]
-
-        # Right product
-        suffix = 1
-        for i in range(n - 1, -1, -1):
-            answer[i] *= suffix
-            suffix *= nums[i]
-
-        return answer
+    def strStr(self, haystack: str, needle: str) -> int:
+    
+        if needle == "":
+            return 0
+    
+        for i in range(len(haystack) - len(needle) + 1):
+            if haystack[i:i+len(needle)] == needle:
+                return i
+        return -1
