@@ -1,12 +1,15 @@
 class Solution:
-    def numSquares(self, n: int) -> int:
-        dp = [0] + [999999] * n
+    def subarraySum(self, nums, k):
+        count = 0
+        prefix_sum = 0
+        freq = {0: 1}
 
-        for i in range(1, n + 1):
-            for j in range(1, i + 1):
-                if j * j > i:
-                    break
+        for num in nums:
+            prefix_sum += num
 
-                dp[i] = min(dp[i], dp[i - j * j] + 1)
+            if prefix_sum - k in freq:
+                count += freq[prefix_sum - k]
 
-        return dp[n]
+            freq[prefix_sum] = freq.get(prefix_sum, 0) + 1
+
+        return count
