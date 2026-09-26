@@ -1,15 +1,34 @@
 class Solution:
-    def subarraySum(self, nums, k):
-        count = 0
-        prefix_sum = 0
-        freq = {0: 1}
+    def evaluate(self, s: str, knowledge: list[list[str]]) -> str:
+        
+        dic = {}
+        for key , value in knowledge:
+            dic[key] = value
 
-        for num in nums:
-            prefix_sum += num
+        result = ""
+        i = 0
+        
+        while i < len(s):
+            
+            if s[i] == "(":
+                i+= 1
+                key = ""
+                while s[i] != ")":
+                    key  += s[i]
+                    i+=1
 
-            if prefix_sum - k in freq:
-                count += freq[prefix_sum - k]
+                if key in dic:
+                    result += dic[key]
+                else:
+                    result += "?"
 
-            freq[prefix_sum] = freq.get(prefix_sum, 0) + 1
+                i += 1
 
-        return count
+            else:
+                
+                result += s[i]
+                i += 1
+
+        return result
+                    
+  
