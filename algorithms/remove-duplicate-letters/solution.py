@@ -1,34 +1,31 @@
+
 class Solution:
-    def evaluate(self, s: str, knowledge: list[list[str]]) -> str:
-        
-        dic = {}
-        for key , value in knowledge:
-            dic[key] = value
+    def removeDuplicateLetters(self, s: str) -> str:
+        last_index = {}
 
-        result = ""
-        i = 0
-        
-        while i < len(s):
-            
-            if s[i] == "(":
-                i+= 1
-                key = ""
-                while s[i] != ")":
-                    key  += s[i]
-                    i+=1
+        # Step 1: Store the last occurrence of each character
+        for i, c in enumerate(s):
+            last_index[c] = i
 
-                if key in dic:
-                    result += dic[key]
-                else:
-                    result += "?"
+        stack = []
+        visited = set()
 
-                i += 1
+        # Step 2: Process each character
+        for i, c in enumerate(s):
 
-            else:
-                
-                result += s[i]
-                i += 1
+            # Skip if character is already present
+            if c in visited:
+                continue
 
-        return result
-                    
-  
+            # Step 3: Remove larger characters if they occur again later
+            while (stack and stack[-1] > c
+                   and last_index[stack[-1]] > i):
+
+                removed = stack.pop()
+                visited.remove(removed)
+
+            # Step 4: Add current character
+            stack.append(c)
+            visited.add(c)
+
+        return ''.join(stack)
